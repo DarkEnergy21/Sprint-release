@@ -1,0 +1,22 @@
+[mod]
+id = "sprint_release"
+version = "1.0.0"
+priority = 100
+
+[compatibility]
+horizon_revision = "6f8c7a0e5d531d3834c4d0be4659a1db8e7e5c2a"
+
+[[module]]
+id = "runtime"
+file = "crates/horizon-client/src/game.rs"
+name = "sprint_release"
+source = "runtime.rs"
+
+[[injection]]
+id = "client_tick_post"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_client_tick_post"
+helper = "client_tick_post.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+]
